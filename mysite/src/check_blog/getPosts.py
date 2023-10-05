@@ -4,7 +4,7 @@ import re, time, random
 from urllib import parse
 import math
 import json
-from check_blog_src import searchPost
+from check_blog import searchPost
 
 def get_total_cnt(blog_id):
     url = f'https://blog.naver.com/PostList.naver?blogId={blog_id}'

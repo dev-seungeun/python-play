@@ -9,7 +9,7 @@ if project_home not in sys.path:
     sys.path = [project_home] + sys.path
     print(sys.path)
 
-from check_blog_src import getPosts
+from check_blog import getPosts
 
 app = Flask(__name__)
 
