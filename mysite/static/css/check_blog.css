@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+body { cursive; margin: 0; padding: 0; }
+.full-screen { width: 100vw; min-height: 100vh; }
+.flex-center { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.text-xl { font-size: 4rem; }
+
+table {
+    margin: 40px 0 20px 0;
+}
+
+td {
+    border-bottom: 1px solid darkgray;
+    padding: 5px;
+}
+
+.jumbotron {
+    margin-bottom: 0;
+}
+
+.loader {
+    width: 60px;
+    position: fixed;
+    z-index: 1000;
+    top: calc(50% - 60px);
+    left: calc(55% - 60px);
+}
+
+.loader-wheel {
+    animation: spin 1s infinite linear;
+    border: 2px solid rgba(30, 30, 30, 0.5);
+    border-left: 4px solid #fff;
+    border-radius: 50%;
+    height: 50px;
+    margin-bottom: 10px;
+    width: 50px;
+}
+
+.loader-text {
+    color: #fff;
+    font-family: arial, sans-serif;
+}
+
+.loader-text:after {
+    content: 'Loading';
+    animation: load 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load {
+    0% {
+        content: 'Loading';
+    }
+    33% {
+        content: 'Loading.';
+    }
+    67% {
+        content: 'Loading..';
+    }
+    100% {
+        content: 'Loading...';
+    }
+}

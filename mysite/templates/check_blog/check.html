@@ -1,0 +1,83 @@
+{% extends "base.html"%}
+{% block content %}
+<div class="jumbotron">
+    <form id="search">
+        <label for="blog_id">Blog ID : </label>
+        <input type="text" id="blog_id" name="blog_id">
+        <input type="hidden" name="page" value="1">
+        <input class="btn btn-sm btn-outline-dark" type="button" id="searchBtn" value="조회"
+               style="margin-bottom: 4.5px; padding: 3.4px 8px;">
+    </form>
+
+    <div>
+        <table id="resultTb"></table>
+        <form id="more" style="display: none">
+            <input type="hidden" id="morePage" name="page">
+            <input type="hidden" id="moreBlogId" name="blog_id">
+            <input class="btn btn-sm btn-dark" id="moreBtn" type="button" value="더보기">
+        </form>
+    </div>
+</div>
+
+<div id="loading" style="display:none;top:0;background-color: gray; opacity:0.5; width:100%; height:100%; position:absolute;">
+    <div class="index loader">
+        <div class="loader-wheel"></div>
+        <div class="loader-text"></div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $("#searchBtn").click(function () {
+            if($("#blog_id").val() != '') {
+                $("#loading").show();
+                $.ajax({
+                    url: '{{url_for("result_blog")}}',
+                    data: $("#search").serialize(),
+                    type: 'GET',
+                    success: function (res) {
+                        console.log(res);
+                        setting(res);
+                    },
+                    error: function() {
+                        alert("please retry");
+                        $("#loading").hide();
+                    }
+                });
+            }
+        });
+
+        $("#moreBtn").click(function () {
+            $("#loading").height($(document).height());
+            $("#loading").show();
+            $.ajax({
+                url: '{{url_for("result_blog")}}',
+                data: $("#more").serialize(),
+                type: 'GET',
+                success: function (res) {
+                    console.log(res);
+                    setting(res);
+                },
+                error: function() {
+                    alert("please retry");
+                    $("#loading").hide();
+                }
+            });
+        });
+    });
+
+    function setting(result) {
+        $("#loading").hide();
+        if(Number(result.page) < result.all_page) {
+            $("#more").show();
+            $("#moreBtn").val("더보기 ("+result.page+"p / "+result.all_page + "p)")
+        }else {
+            $("#more").hide();
+        }
+        $("#morePage").val(Number(result.page)+1)
+        $("#moreBlogId").val(result.blog_id)
+        $("#resultTb").append(result.output);
+    }
+
+</script>
+{% endblock %}
